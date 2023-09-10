@@ -1,83 +1,55 @@
 "use client";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Icon,
-  Radio,
-} from "@chakra-ui/react";
-import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Papa from "papaparse";
+import { Button, Checkbox, Divider, HStack, Icon } from "@chakra-ui/react";
+import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
+import { spreadsheetsUrls } from "../utils/spreadsheets";
+import { fetchSpreadsheetData } from "@/utils/fetchSpreadsheetData";
+import { DeliveryData } from "@/types/DeliveryData";
+import { handleDeliveryData } from "@/utils/handleDeliveryData";
 
 export default function Home() {
-  const [isCheck, setIsCheck] = useState<boolean>(false);
+  const [isLocalPickup, setIsLocalPickup] = useState<boolean>(true);
+  const [selectedDay, setSelectedDay] = useState<string>("friday");
+  const [deliveryData, setDeliveryData] = useState<{
+    [key: string]: DeliveryData;
+  }>({
+    friday: { deliveryDay: "", timeRange: [] },
+    saturday: { deliveryDay: "", timeRange: [] },
+    sunday: { deliveryDay: "", timeRange: [] },
+  });
 
-  const spreadsheetUrlFriday =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRVQMhT5cRbvDwyyy5xerS8CZ4dhXJHfX9sKC8tuXmBMAHVOhbWq-H-qeVUlKQKG5ejQWxfhPiM2bco/pub?gid=0&single=true&output=csv";
+  const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDay(event.target.value);
+  };
 
-  const spreadsheetUrlSaturday =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS-xKQN4MKEO_M9-U3y12qXTdFt_EycLogf0Jkx9r9AKeBf1wTuf4rD9wHdgd2vTrxQObnFseUnrYrG/pub?gid=1982749640&single=true&output=csv";
+  const fetchData = async () => {
+    try {
+      const dataFriday = await fetchSpreadsheetData(spreadsheetsUrls.friday);
+      handleDeliveryData(dataFriday, "friday", setDeliveryData);
 
-  const spreadsheetUrlSunday =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcOM5nrwYU-uvx_kLa4tG_Ln9pL7m3NE6EPsrgoTcldNRmTVTUrnruu5lZjYHQoFfoXkWZrZnf2pwB/pub?gid=1611039606&single=true&output=csv";
+      const dataSaturday = await fetchSpreadsheetData(
+        spreadsheetsUrls.saturday
+      );
+      handleDeliveryData(dataSaturday, "saturday", setDeliveryData);
+
+      const dataSunday = await fetchSpreadsheetData(spreadsheetsUrls.sunday);
+      handleDeliveryData(dataSunday, "sunday", setDeliveryData);
+    } catch (error) {
+      console.error("Erro ao buscar dados da planilha:", error);
+    }
+  };
 
   useEffect(() => {
-    fetch(spreadsheetUrlFriday)
-      .then((response) => response.text())
-      .then((data) => {
-        Papa.parse(data, {
-          header: false,
-          complete: (result: any) => {
-            console.log(result.data);
-          },
-          error: (error: any) => {
-            console.error("Erro ao analisar oo CSV:", error.message);
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar dados da planilha:", error);
-      });
-
-    fetch(spreadsheetUrlSaturday)
-      .then((response) => response.text())
-      .then((data) => {
-        Papa.parse(data, {
-          header: false,
-          complete: (result: any) => {
-            console.log(result.data);
-          },
-          error: (error: any) => {
-            console.error("Erro ao analisar o CSV:", error.message);
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar dados da planilha:", error);
-      });
-
-    fetch(spreadsheetUrlSunday)
-      .then((response) => response.text())
-      .then((data) => {
-        Papa.parse(data, {
-          header: false,
-          complete: (result: any) => {
-            console.log(result.data);
-          },
-          error: (error: any) => {
-            console.error("Erro ao analisar o CSV:", error.message);
-          },
-        });
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar dados da planilha:", error);
-      });
+    fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   console.log("dia selecionado: ", selectedDay);
+  // }, [selectedDay]);
+
+  useEffect(() => {
+    console.log("delivery data ", deliveryData);
+  }, [deliveryData]);
 
   return (
     <VStack
@@ -100,7 +72,6 @@ export default function Home() {
             w={"100%"}
           />
         </Box>
-        {/* Quantidade pedido */}
         <HStack
           bgColor={"red.500"}
           w="80%"
@@ -131,7 +102,6 @@ export default function Home() {
         </Button>
       </VStack>
 
-      {/* Faça sua encomenda */}
       <HStack justify={"start"} w={"80%"}>
         <Text minW={"180px"} fontWeight={"bold"}>
           Faça sua encomenda
@@ -139,7 +109,6 @@ export default function Home() {
         <Divider colorScheme="red" />
       </HStack>
 
-      {/* Retirada no Local */}
       <HStack justify={"start"} w="80%">
         <Checkbox w="80px" h="80px" size={"lg"} />
         <VStack justify={"start"} w="100%" align={"flex-start"} spacing={0}>
@@ -157,21 +126,34 @@ export default function Home() {
         <HStack justify={"start"} w="100%">
           <VStack justify={"start"} w="100%" align={"flex-start"}>
             <Text fontWeight={"bold"}>Data da Entrega</Text>
-            <Select placeholder="Sex : 19/05/2023" size={"lg"}>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
+            {deliveryData.friday && (
+              <>
+                <Select size={"lg"} onChange={handleDayChange}>
+                  <option value="friday">{`Sex : ${deliveryData.friday.deliveryDay}`}</option>
+                  <option value="saturday">{`Sáb : ${deliveryData.saturday.deliveryDay}`}</option>
+                  <option value="sunday">{`Dom : ${deliveryData.sunday.deliveryDay}`}</option>
+                </Select>
+              </>
+            )}
           </VStack>
+
           <VStack justify={"start"} w="100%" align={"flex-start"}>
             <Text fontWeight={"bold"}>Horário da Entrega</Text>
-            <Select placeholder="19h" size={"lg"}>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="option3">Option 3</option>
-            </Select>
+            {selectedDay && deliveryData[selectedDay] && (
+              <Select size={"lg"}>
+                {deliveryData[selectedDay].timeRange?.map((range, index) => {
+                  console.log(range);
+                  return (
+                    <option key={index} value={range}>
+                      {range}
+                    </option>
+                  );
+                })}
+              </Select>
+            )}
           </VStack>
         </HStack>
+
         <Text
           align={"start"}
           fontWeight={"semibold"}
