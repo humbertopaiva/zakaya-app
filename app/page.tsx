@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Checkbox, Divider, HStack, Icon } from "@chakra-ui/react";
 import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
 import { spreadsheetsUrls } from "../utils/spreadsheets";
@@ -43,7 +43,7 @@ export default function Home() {
 
   const createWhatsappMsg = () => {
     const formattedDay = formatDay(selectedDay);
-    const msg = `Olá! Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRage}`;
+    const msg = `Olá! 😊 Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRage} 🍣`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
@@ -74,10 +74,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (deliveryData["friday"]) {
-      setSelectedTimeRange(deliveryData["friday"]?.timeRange[0]);
-    }
-  }, [deliveryData]);
+    console.log(isLocalPickup);
+  }, [isLocalPickup]);
 
   return (
     <VStack
@@ -137,20 +135,49 @@ export default function Home() {
         <Divider colorScheme="red" />
       </HStack>
 
-      <HStack justify={"start"} w="80%">
-        <Checkbox w="80px" h="80px" size={"lg"} />
-        <VStack justify={"start"} w="100%" align={"flex-start"} spacing={0}>
-          <Text fontWeight={"bold"}>Retirada no local</Text>
-          <Text color={"gray.500"} fontSize={"sm"}>
-            Rua Leonides Moreira Campos, 104, apto 202 - Centro
-          </Text>
-          <Text color={"gray.500"} fontSize={"sm"}>
-            Lima Duarte (MG)
-          </Text>
-        </VStack>
-      </HStack>
+      <VStack w="100%">
+        <HStack
+          justify={"start"}
+          w="80%"
+          bgColor={"gray.50"}
+          p="16px"
+          spacing={4}
+        >
+          <Checkbox
+            size={"lg"}
+            justifyContent={"center"}
+            defaultChecked
+            onChange={() => setIsLocalPickup((e) => !e)}
+            colorScheme="green"
+          />
+          <VStack justify={"start"} w="100%" align={"flex-start"} spacing={0}>
+            <Text fontWeight={"bold"}>Retirada no local</Text>
+            <Text color={"gray.500"} fontSize={"sm"}>
+              Rua Leonides Moreira Campos, 104, apto 202 - Centro
+            </Text>
+            <Text color={"gray.500"} fontSize={"sm"}>
+              Lima Duarte (MG)
+            </Text>
+          </VStack>
+        </HStack>
+        <Text
+          color={"whatsapp.500"}
+          fontWeight={"semibold"}
+          fontSize={"sm"}
+          align={"start"}
+          w="80%"
+          colorScheme="green"
+        >
+          Desmarque a caixa acima para escolher o dia e a hora da sua entrega
+        </Text>
+      </VStack>
 
-      <VStack w="80%" align={"start"}>
+      <VStack
+        w="80%"
+        align={"start"}
+        p="16px"
+        opacity={isLocalPickup ? "30%" : "100%"}
+      >
         <HStack justify={"start"} w="100%">
           <VStack justify={"start"} w="100%" align={"flex-start"}>
             <Text fontWeight={"bold"}>Data da Entrega</Text>
@@ -159,6 +186,7 @@ export default function Home() {
                 <Select
                   size={"lg"}
                   onChange={(e) => handleSelectChange(e, setSelectedDay)}
+                  isDisabled={isLocalPickup}
                 >
                   <option value="friday">{`Sex : ${deliveryData.friday.deliveryDay}`}</option>
                   <option value="saturday">{`Sáb : ${deliveryData.saturday.deliveryDay}`}</option>
@@ -174,6 +202,7 @@ export default function Home() {
               <Select
                 size={"lg"}
                 onChange={(e) => handleSelectChange(e, setSelectedTimeRange)}
+                isDisabled={isLocalPickup}
               >
                 {deliveryData[selectedDay].timeRange?.map((range, index) => {
                   if (range) {
