@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Checkbox, Divider, HStack, Icon } from "@chakra-ui/react";
 import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
 import { spreadsheetsUrls } from "../utils/spreadsheets";
@@ -10,6 +10,9 @@ import { handleDeliveryData } from "@/utils/handleDeliveryData";
 export default function Home() {
   const [isLocalPickup, setIsLocalPickup] = useState<boolean>(true);
   const [selectedDay, setSelectedDay] = useState<string>("friday");
+  const [selectedTimeRage, setSelectedTimeRange] = useState<
+    string | [string, string]
+  >("");
   const [deliveryData, setDeliveryData] = useState<{
     [key: string]: DeliveryData;
   }>({
@@ -18,8 +21,35 @@ export default function Home() {
     sunday: { deliveryDay: "", timeRange: [] },
   });
 
-  const handleDayChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDay(event.target.value);
+  const handleSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    callback: any
+  ) => {
+    callback(event.target.value);
+  };
+
+  const formatDay = (day: string) => {
+    switch (day) {
+      case "friday":
+        return "Sexta";
+      case "saturday":
+        return "Sábado";
+      case "sunday":
+        return "Domingo";
+      default:
+        return "";
+    }
+  };
+
+  const createWhatsappMsg = () => {
+    const formattedDay = formatDay(selectedDay);
+    const msg = `Olá! Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRage}`;
+
+    const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
+
+    if (selectedTimeRage !== "") {
+      window.open(whatsappLink, "_blank");
+    }
   };
 
   const fetchData = async () => {
@@ -43,12 +73,10 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("dia selecionado: ", selectedDay);
-  // }, [selectedDay]);
-
   useEffect(() => {
-    console.log("delivery data ", deliveryData);
+    if (deliveryData["friday"]) {
+      setSelectedTimeRange(deliveryData["friday"]?.timeRange[0]);
+    }
   }, [deliveryData]);
 
   return (
@@ -128,7 +156,10 @@ export default function Home() {
             <Text fontWeight={"bold"}>Data da Entrega</Text>
             {deliveryData.friday && (
               <>
-                <Select size={"lg"} onChange={handleDayChange}>
+                <Select
+                  size={"lg"}
+                  onChange={(e) => handleSelectChange(e, setSelectedDay)}
+                >
                   <option value="friday">{`Sex : ${deliveryData.friday.deliveryDay}`}</option>
                   <option value="saturday">{`Sáb : ${deliveryData.saturday.deliveryDay}`}</option>
                   <option value="sunday">{`Dom : ${deliveryData.sunday.deliveryDay}`}</option>
@@ -140,14 +171,18 @@ export default function Home() {
           <VStack justify={"start"} w="100%" align={"flex-start"}>
             <Text fontWeight={"bold"}>Horário da Entrega</Text>
             {selectedDay && deliveryData[selectedDay] && (
-              <Select size={"lg"}>
+              <Select
+                size={"lg"}
+                onChange={(e) => handleSelectChange(e, setSelectedTimeRange)}
+              >
                 {deliveryData[selectedDay].timeRange?.map((range, index) => {
-                  console.log(range);
-                  return (
-                    <option key={index} value={range}>
-                      {range}
-                    </option>
-                  );
+                  if (range) {
+                    return (
+                      <option key={index} value={range}>
+                        {range}
+                      </option>
+                    );
+                  }
                 })}
               </Select>
             )}
@@ -165,7 +200,12 @@ export default function Home() {
         </Text>
       </VStack>
 
-      <Button w="80%" p="32px" colorScheme="whatsapp">
+      <Button
+        w="80%"
+        p="32px"
+        colorScheme="whatsapp"
+        onClick={(e) => console.log(createWhatsappMsg())}
+      >
         Fazer encomenda
       </Button>
 
