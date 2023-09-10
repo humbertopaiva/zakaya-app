@@ -36,7 +36,7 @@ export default function Home() {
             console.log(result.data);
           },
           error: (error: any) => {
-            console.error("Erro ao analisar o CSV:", error.message);
+            console.error("Erro ao analisar oo CSV:", error.message);
           },
         });
       })
