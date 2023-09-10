@@ -1,0 +1,10 @@
+{
+  "id": "deliverydata",
+  "label": "deliverydata",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {}
+  }
+}
