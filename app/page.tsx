@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import {
   Button,
+  Center,
   Checkbox,
   Divider,
   HStack,
   Icon,
   IconButton,
+  Link,
   Spinner,
 } from "@chakra-ui/react";
 import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
@@ -14,8 +16,9 @@ import { spreadsheetsUrls } from "../utils/spreadsheets";
 import { fetchSpreadsheetData } from "@/utils/fetchSpreadsheetData";
 import { DeliveryData } from "@/types/DeliveryData";
 import { handleDeliveryData } from "@/utils/handleDeliveryData";
-import { SiWhatsapp, SiFoodpanda } from "react-icons/si";
+import { SiWhatsapp, SiFoodpanda, SiInstagram } from "react-icons/si";
 import { TbAlertSquareRounded } from "react-icons/tb";
+import { RiMotorbikeFill } from "react-icons/ri";
 
 export default function Home() {
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
@@ -103,6 +106,7 @@ export default function Home() {
     <VStack
       maxW="600"
       w="100%"
+      minH="100vh"
       justify={"start"}
       align={"center"}
       mt={8}
@@ -190,23 +194,24 @@ export default function Home() {
             </Text>
           </VStack>
         </HStack>
-        <Text
-          color={"whatsapp.500"}
-          fontWeight={"semibold"}
-          fontSize={"sm"}
-          align={"start"}
-          w="80%"
-          colorScheme="green"
-        >
-          Vai de delivey? Desmarque a caixa acima para escolher o dia e a hora
-          da sua entrega:
-        </Text>
+        <HStack w="80%" spacing={6}>
+          <Icon as={RiMotorbikeFill} color={"gray.600"} w={6} h={6} />
+          <Text
+            color={"whatsapp.500"}
+            fontWeight={"medium"}
+            fontSize={"md"}
+            align={"start"}
+            colorScheme="green"
+          >
+            Vai de delivey? Desmarque a caixa acima para escolher o dia e a hora
+            da sua entrega:
+          </Text>
+        </HStack>
       </VStack>
 
       <VStack
         w="80%"
         align={"start"}
-        p="16px"
         color={isLocalPickup ? "gray.200" : "gray.800"}
       >
         <HStack justify={"start"} w="100%">
@@ -277,8 +282,21 @@ export default function Home() {
           Pode haver uma variação de até 20 minutos no horário de entrega.
         </Text>
       </HStack>
-      <Box w="100%" color={"gray.800"} justifySelf={"center"}>
-        <Text fontSize={"sm"}>@zakaya.oriental</Text>
+      <Box w="100%" color={"gray.800"}>
+        <Center>
+          <VStack align={"center"} justify={"center"}>
+            <Icon as={SiInstagram} />
+            <Link
+              fontSize={"sm"}
+              fontWeight={"bold"}
+              mb={8}
+              href="https://instagram.com/zakaya.oriental"
+              isExternal
+            >
+              zakaya.oriental
+            </Link>
+          </VStack>
+        </Center>
       </Box>
     </VStack>
   );
