@@ -7,8 +7,12 @@ const spreadsheetUrlSaturday =
 const spreadsheetUrlSunday =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQcOM5nrwYU-uvx_kLa4tG_Ln9pL7m3NE6EPsrgoTcldNRmTVTUrnruu5lZjYHQoFfoXkWZrZnf2pwB/pub?gid=1611039606&single=true&output=csv";
 
+const spreadsheetRemainingOrders =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQD75nwS9_oVlj933k23GCTsj-lUi6s7ymjWpJ6VeJKZ-3cJydDGWSJDYVcNPzZdg5xEkDWBxYwWUNy/pub?output=csv";
+
 export const spreadsheetsUrls = {
   friday: spreadsheetUrlFriday,
   saturday: spreadsheetUrlSaturday,
   sunday: spreadsheetUrlSunday,
+  remainingOrders: spreadsheetRemainingOrders,
 };

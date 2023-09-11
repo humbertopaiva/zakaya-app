@@ -1,16 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Button, Checkbox, Divider, HStack, Icon } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  HStack,
+  Icon,
+  IconButton,
+  Spinner,
+} from "@chakra-ui/react";
 import { Image, Box, Text, VStack, Select } from "@chakra-ui/react";
 import { spreadsheetsUrls } from "../utils/spreadsheets";
 import { fetchSpreadsheetData } from "@/utils/fetchSpreadsheetData";
 import { DeliveryData } from "@/types/DeliveryData";
 import { handleDeliveryData } from "@/utils/handleDeliveryData";
+import { SiWhatsapp, SiFoodpanda } from "react-icons/si";
+import { TbAlertSquareRounded } from "react-icons/tb";
 
 export default function Home() {
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
+  const [remainingOrders, setRemainingOrders] = useState<string>("");
   const [isLocalPickup, setIsLocalPickup] = useState<boolean>(true);
   const [selectedDay, setSelectedDay] = useState<string>("friday");
-  const [selectedTimeRage, setSelectedTimeRange] = useState<
+  const [selectedTimeRange, setSelectedTimeRange] = useState<
     string | [string, string]
   >("");
   const [deliveryData, setDeliveryData] = useState<{
@@ -43,12 +55,16 @@ export default function Home() {
 
   const createWhatsappMsg = () => {
     const formattedDay = formatDay(selectedDay);
-    const msg = `Olá! 😊 Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRage} 🍣`;
+    const msg =
+      selectedTimeRange &&
+      `Olá! 😊 Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRange} 🍣`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
-    if (selectedTimeRage !== "") {
+    if (selectedTimeRange !== "") {
       window.open(whatsappLink, "_blank");
+    } else {
+      window.open("https://wa.me/5532999208896");
     }
   };
 
@@ -64,6 +80,16 @@ export default function Home() {
 
       const dataSunday = await fetchSpreadsheetData(spreadsheetsUrls.sunday);
       handleDeliveryData(dataSunday, "sunday", setDeliveryData);
+
+      const remainingOrdersSpreadsheetData = await fetchSpreadsheetData(
+        spreadsheetsUrls.remainingOrders
+      );
+
+      const totalOrders = remainingOrdersSpreadsheetData[1];
+      console.log("TOTAL", totalOrders);
+      setRemainingOrders(totalOrders[0]);
+
+      setIsLoadingData(false);
     } catch (error) {
       console.error("Erro ao buscar dados da planilha:", error);
     }
@@ -72,10 +98,6 @@ export default function Home() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(isLocalPickup);
-  }, [isLocalPickup]);
 
   return (
     <VStack
@@ -98,6 +120,7 @@ export default function Home() {
             w={"100%"}
           />
         </Box>
+
         <HStack
           bgColor={"red.500"}
           w="80%"
@@ -114,7 +137,7 @@ export default function Home() {
           </Box>
           <Divider orientation="vertical" />
           <Box fontWeight={"bold"} color={"gray.100"}>
-            18
+            {isLoadingData ? <Spinner /> : remainingOrders}
           </Box>
         </HStack>
         <Button
@@ -123,6 +146,7 @@ export default function Home() {
           h="60px"
           backgroundColor={"gray.800"}
           color={"white"}
+          leftIcon={<SiFoodpanda />}
         >
           Ver Cardápio
         </Button>
@@ -149,9 +173,15 @@ export default function Home() {
             defaultChecked
             onChange={() => setIsLocalPickup((e) => !e)}
             colorScheme="green"
+            w="60px"
           />
           <VStack justify={"start"} w="100%" align={"flex-start"} spacing={0}>
-            <Text fontWeight={"bold"}>Retirada no local</Text>
+            <Text fontWeight={"bold"} fontSize={"md"}>
+              Retirada no local
+            </Text>
+            <Text color={"gray.500"} fontSize={"md"} fontWeight={"bold"} mb={2}>
+              Sexta, Sábado e Domingo | 19h às 22h30
+            </Text>
             <Text color={"gray.500"} fontSize={"sm"}>
               Rua Leonides Moreira Campos, 104, apto 202 - Centro
             </Text>
@@ -168,7 +198,8 @@ export default function Home() {
           w="80%"
           colorScheme="green"
         >
-          Desmarque a caixa acima para escolher o dia e a hora da sua entrega
+          Vai de delivey? Desmarque a caixa acima para escolher o dia e a hora
+          da sua entrega:
         </Text>
       </VStack>
 
@@ -176,7 +207,7 @@ export default function Home() {
         w="80%"
         align={"start"}
         p="16px"
-        opacity={isLocalPickup ? "30%" : "100%"}
+        color={isLocalPickup ? "gray.200" : "gray.800"}
       >
         <HStack justify={"start"} w="100%">
           <VStack justify={"start"} w="100%" align={"flex-start"}>
@@ -222,8 +253,8 @@ export default function Home() {
           align={"start"}
           fontWeight={"semibold"}
           fontSize={"sm"}
-          color={"gray.400"}
           mt={1}
+          color={isLocalPickup ? "gray.200" : "gray.400"}
         >
           Taxa de Entrega: R$5,00
         </Text>
@@ -234,18 +265,20 @@ export default function Home() {
         p="32px"
         colorScheme="whatsapp"
         onClick={(e) => console.log(createWhatsappMsg())}
+        aria-label="Botão de enviar"
+        leftIcon={<SiWhatsapp />}
       >
         Fazer encomenda
       </Button>
 
       <HStack w="80%" justify={"center"} mb={"16px"}>
-        <Icon></Icon>
+        <Icon as={TbAlertSquareRounded} />
         <Text fontSize={"sm"}>
           Pode haver uma variação de até 20 minutos no horário de entrega.
         </Text>
       </HStack>
-      <Box bgColor={"gray.300"} w="100%">
-        Instagram
+      <Box w="100%" color={"gray.800"} justifySelf={"center"}>
+        <Text fontSize={"sm"}>@zakaya.oriental</Text>
       </Box>
     </VStack>
   );
