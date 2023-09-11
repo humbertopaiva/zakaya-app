@@ -167,7 +167,7 @@ export default function Home() {
         <HStack
           justify={"start"}
           w="80%"
-          bgColor={"gray.50"}
+          bgColor={isLocalPickup ? "green.100" : "gray.50"}
           p="16px"
           spacing={4}
         >
@@ -183,10 +183,10 @@ export default function Home() {
             <Text fontWeight={"bold"} fontSize={"md"}>
               Retirada no local
             </Text>
-            <Text color={"gray.500"} fontSize={"md"} fontWeight={"bold"} mb={2}>
+            <Text color={"gray.800"} fontSize={"md"} fontWeight={"bold"} mb={2}>
               Sexta, Sábado e Domingo | 19h às 22h30
             </Text>
-            <Text color={"gray.500"} fontSize={"sm"}>
+            <Text color={"gray.600"} fontSize={"sm"}>
               Rua Leonides Moreira Campos, 104, apto 202 - Centro
             </Text>
             <Text color={"gray.500"} fontSize={"sm"}>
