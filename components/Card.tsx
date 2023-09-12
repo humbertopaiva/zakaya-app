@@ -25,7 +25,7 @@ export const ChakraCard = ({
   cardImage: string;
 }) => {
   return (
-    <Card maxW="sm" variant={"unstyled"} mb="16px">
+    <Card maxW="sm" variant={"unstyled"} mb="16px" p="8px">
       <CardBody>
         <Image
           src={cardImage}

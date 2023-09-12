@@ -4,22 +4,15 @@ import {
   ModalContent,
   ModalBody,
   ModalCloseButton,
-  Card,
-  CardBody,
-  Image,
-  Stack,
-  Heading,
-  Text,
-  Divider,
-  CardFooter,
-  ButtonGroup,
-  Button,
   ModalHeader,
+  Icon,
+  Flex,
 } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ChakraCard } from "./Card";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 interface IChakraModal {
   isOpen: boolean;
@@ -43,7 +36,11 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
       <ModalOverlay />
       <ModalContent px="8px" mx={"8px"}>
         <ModalCloseButton />
-        <ModalHeader color={"gray.700"}>Arraste para o lado</ModalHeader>
+        <ModalHeader color={"gray.700"}>
+          <Flex align={"center"} fontSize={"lg"}>
+            Arraste para o lado <Icon ml="8px" as={BiRightArrowAlt} />
+          </Flex>
+        </ModalHeader>
         <ModalBody pt={"16px"}>
           <Slider {...sliderSettings}>
             <ChakraCard
