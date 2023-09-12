@@ -14,10 +14,12 @@ import {
   CardFooter,
   ButtonGroup,
   Button,
+  ModalHeader,
 } from "@chakra-ui/react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ChakraCard } from "./Card";
 
 interface IChakraModal {
   isOpen: boolean;
@@ -32,107 +34,36 @@ const sliderSettings = {
   slidesToScroll: 1,
 };
 
+import { getMenu } from "../utils/getMenu";
+
 export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
+  const { combo25, combo50, combo70 } = getMenu();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
+        <ModalHeader>Arraste para o lado</ModalHeader>
         <ModalBody pt={"32px"}>
           <Slider {...sliderSettings}>
-            <Card maxW="sm">
-              <CardBody>
-                <Image
-                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  alt="Green double couch with wooden legs"
-                  borderRadius="lg"
-                />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">Living room Sofa</Heading>
-                  <Text>
-                    This sofa is perfect for modern tropical spaces, baroque
-                    inspired spaces, earthy toned spaces and for people who love
-                    a chic design with a sprinkle of vintage design.
-                  </Text>
-                  <Text color="blue.600" fontSize="2xl">
-                    $450
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="blue">
-                    Buy now
-                  </Button>
-                  <Button variant="ghost" colorScheme="blue">
-                    Add to cart
-                  </Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-            <Card maxW="sm">
-              <CardBody>
-                <Image
-                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  alt="Green double couch with wooden legs"
-                  borderRadius="lg"
-                />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">Living room Sofa</Heading>
-                  <Text>
-                    This sofa is perfect for modern tropical spaces, baroque
-                    inspired spaces, earthy toned spaces and for people who love
-                    a chic design with a sprinkle of vintage design.
-                  </Text>
-                  <Text color="blue.600" fontSize="2xl">
-                    $450
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="blue">
-                    Buy now
-                  </Button>
-                  <Button variant="ghost" colorScheme="blue">
-                    Add to cart
-                  </Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-            <Card maxW="sm">
-              <CardBody>
-                <Image
-                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  alt="Green double couch with wooden legs"
-                  borderRadius="lg"
-                />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">Living room Sofa</Heading>
-                  <Text>
-                    This sofa is perfect for modern tropical spaces, baroque
-                    inspired spaces, earthy toned spaces and for people who love
-                    a chic design with a sprinkle of vintage design.
-                  </Text>
-                  <Text color="blue.600" fontSize="2xl">
-                    $450
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="blue">
-                    Buy now
-                  </Button>
-                  <Button variant="ghost" colorScheme="blue">
-                    Add to cart
-                  </Button>
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
+            <ChakraCard
+              combo={combo25}
+              title="Combo de 25 peças"
+              price="R$59,90"
+              cardImage="https://images.unsplash.com/photo-1590987337605-84f3ed4dc29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            />
+            <ChakraCard
+              combo={combo50}
+              title="Combo de 50 peças"
+              price="R$89,90"
+              cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
+            />
+            <ChakraCard
+              combo={combo70}
+              title="Combo de 25 peças"
+              price="R$120,90"
+              cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
+            />
           </Slider>
         </ModalBody>
       </ModalContent>
