@@ -41,10 +41,10 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent px="8px" mx={"8px"}>
         <ModalCloseButton />
-        <ModalHeader>Arraste para o lado</ModalHeader>
-        <ModalBody pt={"32px"}>
+        <ModalHeader color={"gray.700"}>Arraste para o lado</ModalHeader>
+        <ModalBody pt={"16px"}>
           <Slider {...sliderSettings}>
             <ChakraCard
               combo={combo25}
@@ -60,7 +60,7 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
             />
             <ChakraCard
               combo={combo70}
-              title="Combo de 25 peças"
+              title="Combo de 70 peças"
               price="R$120,90"
               cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
             />

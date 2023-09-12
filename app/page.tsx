@@ -21,8 +21,10 @@ import { SiWhatsapp, SiFoodpanda, SiInstagram } from "react-icons/si";
 import { TbAlertSquareRounded } from "react-icons/tb";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { ChakraModal } from "@/components/Modal";
+import { WelcomeModal } from "@/components/WelcomeModal";
 
 export default function Home() {
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
   const [remainingOrders, setRemainingOrders] = useState<string>("");
@@ -92,7 +94,6 @@ export default function Home() {
       );
 
       const totalOrders = remainingOrdersSpreadsheetData[1];
-      console.log("TOTAL", totalOrders);
       setRemainingOrders(totalOrders[0]);
 
       setIsLoadingData(false);
@@ -120,12 +121,18 @@ export default function Home() {
           <Image src="./logo.png" alt="Logo" />
         </Box>
 
-        <VStack>
+        <Text as={"span"} fontWeight={"bold"} color={"red.500"}>
+          Pedidos até às 16h
+        </Text>
+
+        <VStack w="100%">
           <Box w="100%">
             <Image
               src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80"
               alt="Sushi"
               w={"100%"}
+              h="200px"
+              objectFit={"cover"}
             />
           </Box>
 
@@ -309,7 +316,14 @@ export default function Home() {
           </Center>
         </Box>
       </VStack>
-      <ChakraModal isOpen={isOpen} onClose={onClose} />
+      {!isWelcomeModalOpen && <ChakraModal isOpen={isOpen} onClose={onClose} />}
+      {isWelcomeModalOpen && (
+        <WelcomeModal
+          isOpen={isWelcomeModalOpen}
+          onClose={onClose}
+          callback={setIsWelcomeModalOpen}
+        />
+      )}
     </>
   );
 }
