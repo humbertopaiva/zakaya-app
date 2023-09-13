@@ -16,7 +16,7 @@ import { SiInstagram } from "react-icons/si";
 interface IChakraModal {
   isOpen: boolean;
   onClose: () => void;
-  callback: (value: boolean) => void;
+  callback?: (value: boolean) => void;
 }
 
 export const SoldOutModal = ({ isOpen, onClose, callback }: IChakraModal) => {

@@ -46,7 +46,7 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
             <ChakraCard
               combo={combo25}
               title="Combo de 25 peças"
-              price="R$59,90"
+              price="R$47,90"
               cardImage="https://images.unsplash.com/photo-1590987337605-84f3ed4dc29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
             />
             <ChakraCard
@@ -58,7 +58,7 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
             <ChakraCard
               combo={combo70}
               title="Combo de 70 peças"
-              price="R$120,90"
+              price="R$114,90"
               cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
             />
           </Slider>

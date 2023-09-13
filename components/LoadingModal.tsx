@@ -18,7 +18,12 @@ interface IChakraModal {
 export const LoadingModal = ({ isOpen, onClose, callback }: IChakraModal) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size={"full"}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={"full"}
+        blockScrollOnMount={true}
+      >
         <ModalOverlay />
         <ModalContent bgColor={"gray.900"}>
           <ModalBody>Carregando</ModalBody>
