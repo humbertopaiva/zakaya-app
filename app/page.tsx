@@ -113,7 +113,13 @@ export default function Home() {
   return (
     <>
       {isLoadingData && (
-        <Center bgColor={"gray.900"} w="100vw" h="100vh">
+        <Center
+          bgColor={"gray.900"}
+          minW="100vw"
+          minH="100vh"
+          w="100%"
+          h="100%"
+        >
           <Spinner color="red.500" w="120px" h="120px" position={"absolute"} />
           <Image
             src="./zaka_simbolo.svg"
@@ -248,7 +254,7 @@ export default function Home() {
                 </Text>
               </VStack>
             </HStack>
-            <HStack w="80%" spacing={2}>
+            <HStack w="80%" spacing={2} mt={2}>
               <Icon as={RiMotorbikeFill} color={"gray.600"} w={8} h={8} />
               <Text fontWeight={"bold"} fontSize={"md"} align={"start"}>
                 Vai de delivey? Desmarque a caixa acima para escolher a Data e a
