@@ -6,6 +6,7 @@ import {
   Checkbox,
   Divider,
   HStack,
+  Highlight,
   Icon,
   IconButton,
   Link,
@@ -66,7 +67,9 @@ export default function Home() {
     const formattedDay = formatDay(selectedDay);
     const msg =
       selectedTimeRange &&
-      `Olá! 😊 Gostaria de fazer uma encomenda para ${formattedDay}, dia ${deliveryData[selectedDay].deliveryDay}, para ser entregue entre ${selectedTimeRange} 🍣`;
+      `Olá! 😊 Gostaria de agendar uma encomenda🍣%0A%0A
+      *Data*: ${formattedDay} ${deliveryData[selectedDay].deliveryDay}
+      *Horário*: ${selectedTimeRange}`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
@@ -112,7 +115,12 @@ export default function Home() {
       {isLoadingData && (
         <Center bgColor={"gray.900"} w="100vw" h="100vh">
           <Spinner color="red.500" w="120px" h="120px" position={"absolute"} />
-          <Image src="./zaka_simbolo.svg" w="100px" h="100px" />
+          <Image
+            src="./zaka_simbolo.svg"
+            w="100px"
+            h="100px"
+            alt="logo zakaya"
+          />
         </Center>
       )}
       {isWelcomeModalOpen && !isLoadingData && (
@@ -136,9 +144,16 @@ export default function Home() {
             <Image src="./logo.png" alt="Logo" />
           </Box>
 
-          <Text as={"span"} fontWeight={"bold"} color={"red.500"}>
+          <Text
+            as={"span"}
+            fontWeight={"bold"}
+            fontSize={"lg"}
+            color={"red.500"}
+          >
             Pedidos até às 16h
           </Text>
+
+          <Divider />
 
           <VStack w="100%">
             <Box w="100%">
@@ -233,17 +248,11 @@ export default function Home() {
                 </Text>
               </VStack>
             </HStack>
-            <HStack w="80%" spacing={6}>
-              <Icon as={RiMotorbikeFill} color={"gray.600"} w={6} h={6} />
-              <Text
-                color={"whatsapp.500"}
-                fontWeight={"medium"}
-                fontSize={"md"}
-                align={"start"}
-                colorScheme="green"
-              >
-                Vai de delivey? Desmarque a caixa acima para escolher o dia e a
-                hora da sua entrega:
+            <HStack w="80%" spacing={2}>
+              <Icon as={RiMotorbikeFill} color={"gray.600"} w={8} h={8} />
+              <Text fontWeight={"bold"} fontSize={"md"} align={"start"}>
+                Vai de delivey? Desmarque a caixa acima para escolher a Data e a
+                Hora da sua entrega:
               </Text>
             </HStack>
           </VStack>

@@ -27,8 +27,7 @@ const hossoSalmao: Product = {
 
 const uramakiPate: Product = {
   name: "Uramaki de Patê de Salmão",
-  description:
-    "Rolinho de arroz com alga, gergelim torrado, cream cheese e salmão fresco.",
+  description: "Rolinho de arroz com alga, gergelim torrado e patê de salmão.",
   image: "./products/uramaki-pate-min.jpeg",
 };
 

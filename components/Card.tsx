@@ -25,7 +25,7 @@ export const ChakraCard = ({
   cardImage: string;
 }) => {
   return (
-    <Card maxW="sm" variant={"unstyled"} mb="16px" p="8px">
+    <Card maxW="sm" variant={"unstyled"} mb="16px" p="8px" h="100%">
       <CardBody>
         <Image
           src={cardImage}
@@ -36,7 +36,7 @@ export const ChakraCard = ({
           objectFit={"cover"}
         />
         <Stack mt="6" spacing="3">
-          <Heading size="md">{title}</Heading>
+          <Heading size="lg">{title}</Heading>
           {combo.map((combo: any) => {
             return (
               <>

@@ -12,10 +12,9 @@ import {
 interface IChakraModal {
   isOpen: boolean;
   onClose: () => void;
-  callback: (value: boolean) => void;
 }
 
-export const LoadingModal = ({ isOpen, onClose, callback }: IChakraModal) => {
+export const LoadingModal = ({ isOpen, onClose }: IChakraModal) => {
   return (
     <>
       <Modal
