@@ -135,6 +135,7 @@ export default function Home() {
           minH="100vh"
           w="100%"
           h="100%"
+          position={"relative"}
         >
           <Spinner color="red.500" w="120px" h="120px" position={"absolute"} />
           <Image
@@ -143,6 +144,9 @@ export default function Home() {
             h="100px"
             alt="logo zakaya"
           />
+          <Text position={"absolute"} color={"gray.400"} mt="180px">
+            Carregando agendador...
+          </Text>
         </Center>
       )}
 
@@ -202,7 +206,7 @@ export default function Home() {
           <VStack w="100%">
             <Box w="100%">
               <Image
-                src="https://img.freepik.com/fotos-premium/funny-woman-sushi-meal-lifestyle-generate-ai_98402-28287.jpg"
+                src="./foto-site.jpg"
                 alt="Sushi"
                 w={"100%"}
                 h="200px"
