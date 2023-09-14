@@ -36,11 +36,12 @@ export const WelcomeModal = ({ isOpen, onClose, callback }: IChakraModal) => {
         <ModalCloseButton />
         <ModalBody>
           <Image
-            src="https://www.creativefabrica.com/wp-content/uploads/2021/02/18/Kawaii-Sushi-Happy-Face-Illustration-Graphics-8762014-1.jpg"
+            src="./welcome-image.jpg"
             alt="salmon illustration"
             w="100%"
             h="300px"
             objectFit={"cover"}
+            justifyContent={"center"}
             mb="16px"
           />
           <Text mb="1rem">
@@ -48,9 +49,7 @@ export const WelcomeModal = ({ isOpen, onClose, callback }: IChakraModal) => {
           </Text>
           <Text mb="1rem">
             🍱 Estamos começando devagar para garantir a melhor qualidade em
-            cada pedido. Somos apaixonados pelo que fazemos e escolhemos
-            cuidadosamente ingredientes frescos e muito saborosos para que você
-            tenha uma ótima experiência.
+            cada pedido.
           </Text>
           <Text mb="1rem">
             A padronização e organização são prioridade. Agradecemos sua

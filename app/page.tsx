@@ -23,13 +23,11 @@ import { spreadsheetsUrls } from "../utils/spreadsheets";
 import { fetchSpreadsheetData } from "@/utils/fetchSpreadsheetData";
 import { DeliveryData } from "@/types/DeliveryData";
 import { handleDeliveryData } from "@/utils/handleDeliveryData";
-import { SiWhatsapp, SiFoodpanda, SiInstagram } from "react-icons/si";
+import { SiWhatsapp, SiInstagram } from "react-icons/si";
 import { TbAlertSquareRounded } from "react-icons/tb";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { ChakraModal } from "@/components/Modal";
 import { WelcomeModal } from "@/components/WelcomeModal";
-import { LoadingModal } from "@/components/LoadingModal";
-import Head from "next/head";
 
 export default function Home() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -74,9 +72,7 @@ export default function Home() {
     const formattedDay = formatDay(selectedDay);
     const msg =
       selectedTimeRange &&
-      `Olá! 😊 Gostaria de agendar uma encomenda🍣%0A%0A
-      *Data*: ${formattedDay} ${deliveryData[selectedDay].deliveryDay}
-      *Horário*: ${selectedTimeRange}`;
+      `🍣Gostaria%20de%20agendar%20uma%20encomenda%20para%20${formattedDay}%20${deliveryData[selectedDay].deliveryDay}%20|%20${selectedTimeRange}`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
@@ -122,17 +118,12 @@ export default function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    !isLocalPickup && setSelectedTimeRange(deliveryData["friday"].timeRange[0]);
+  }, [isLocalPickup]);
+
   return (
     <>
-      {/* <head>
-        <title>Zakayá | Sabores do Oriente</title>
-        <meta
-          property="og:title"
-          content="Zakayá | Sabores do Oriente"
-          key="title"
-        />
-      </head> */}
-
       {isLoadingData && (
         <Center
           bgColor={"gray.900"}
@@ -207,7 +198,7 @@ export default function Home() {
           <VStack w="100%">
             <Box w="100%">
               <Image
-                src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80"
+                src="https://img.freepik.com/fotos-premium/funny-woman-sushi-meal-lifestyle-generate-ai_98402-28287.jpg"
                 alt="Sushi"
                 w={"100%"}
                 h="200px"
