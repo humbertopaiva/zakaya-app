@@ -46,21 +46,24 @@ export const ChakraModal = ({ isOpen, onClose }: IChakraModal) => {
           <Slider {...sliderSettings}>
             <ChakraCard
               combo={combo25}
-              title="Combinado de 25 peças"
+              title="Combo de 25 peças"
               price="R$47,90"
-              cardImage="https://images.unsplash.com/photo-1590987337605-84f3ed4dc29f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              cardImage="./combo-25.jpg"
+              onClose={onClose}
             />
             <ChakraCard
               combo={combo50}
-              title="Combinado de 50 peças"
+              title="Combo de 50 peças"
               price="R$89,90"
-              cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
+              cardImage="./combo-50.png"
+              onClose={onClose}
             />
             <ChakraCard
               combo={combo70}
-              title="Combinado de 70 peças"
+              title="Combo de 70 peças"
               price="R$114,90"
-              cardImage="https://www.mirassolconectada.com.br/wp-content/uploads/2021/02/WhatsApp-Image-2021-02-06-at-20.36.23-1.jpeg"
+              cardImage="./combo-70.png"
+              onClose={onClose}
             />
           </Slider>
         </ModalBody>

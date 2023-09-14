@@ -10,6 +10,11 @@ import {
   Icon,
   IconButton,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Spinner,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -24,8 +29,10 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { ChakraModal } from "@/components/Modal";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { LoadingModal } from "@/components/LoadingModal";
+import Head from "next/head";
 
 export default function Home() {
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
@@ -106,12 +113,26 @@ export default function Home() {
     }
   };
 
+  const handleCloseMenu = () => {
+    setIsOpenMenu(false);
+    onClose();
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
     <>
+      {/* <head>
+        <title>Zakayá | Sabores do Oriente</title>
+        <meta
+          property="og:title"
+          content="Zakayá | Sabores do Oriente"
+          key="title"
+        />
+      </head> */}
+
       {isLoadingData && (
         <Center
           bgColor={"gray.900"}
@@ -128,6 +149,30 @@ export default function Home() {
             alt="logo zakaya"
           />
         </Center>
+      )}
+
+      {isOpenMenu && (
+        <Modal
+          isOpen={isOpenMenu}
+          onClose={handleCloseMenu}
+          size={"full"}
+          allowPinchZoom
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody w="100%">
+              <Center>
+                <VStack>
+                  <Image alt="cardápio" src="./cardapio-zaka.jpg" w="100%" />
+                  <Button colorScheme="whatsapp" onClick={handleCloseMenu}>
+                    Fazer Pedido
+                  </Button>
+                </VStack>
+              </Center>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       )}
       {isWelcomeModalOpen && !isLoadingData && (
         <WelcomeModal
@@ -159,8 +204,6 @@ export default function Home() {
             Pedidos até às 16h
           </Text>
 
-          <Divider />
-
           <VStack w="100%">
             <Box w="100%">
               <Image
@@ -191,17 +234,29 @@ export default function Home() {
                 {isLoadingData ? <Spinner /> : remainingOrders}
               </Box>
             </HStack>
-            <Button
-              w={"80%"}
-              p="16px"
-              h="60px"
-              backgroundColor={"gray.800"}
-              color={"white"}
-              leftIcon={<SiFoodpanda />}
-              onClick={onOpen}
-            >
-              Ver Cardápio
-            </Button>
+            <HStack w="80%">
+              <Button
+                w={"80%"}
+                p="16px"
+                h="60px"
+                backgroundColor={"gray.800"}
+                color={"white"}
+                onClick={onOpen}
+              >
+                Combos
+              </Button>
+              <Button
+                w={"80%"}
+                p="16px"
+                h="60px"
+                color={"gray.800"}
+                onClick={() => setIsOpenMenu(true)}
+                variant={"outline"}
+                colorScheme="red"
+              >
+                Cardápio
+              </Button>
+            </HStack>
           </VStack>
 
           <HStack justify={"start"} w={"80%"}>

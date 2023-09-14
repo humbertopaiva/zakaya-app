@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardBody,
   CardProps,
@@ -9,6 +10,7 @@ import {
   Stack,
   Text,
   VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { Combo } from "@/types/Combo";
@@ -18,11 +20,13 @@ export const ChakraCard = ({
   title,
   price,
   cardImage,
+  onClose,
 }: {
   combo: Combo;
   title: string;
   price: string;
   cardImage: string;
+  onClose: () => void;
 }) => {
   return (
     <Card maxW="sm" variant={"unstyled"} mb="16px" p="8px" h="100%">
@@ -62,9 +66,14 @@ export const ChakraCard = ({
             );
           })}
 
-          <Text color="orange.500" fontSize="2xl" mt="8px">
-            {price}
-          </Text>
+          <HStack justify={"space-between"}>
+            <Text color="orange.500" fontSize="2xl" mt="8px">
+              {price}
+            </Text>
+            <Button size={"sm"} colorScheme="whatsapp" onClick={onClose}>
+              Fazer pedido
+            </Button>
+          </HStack>
         </Stack>
       </CardBody>
     </Card>
