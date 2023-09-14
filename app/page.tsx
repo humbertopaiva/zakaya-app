@@ -72,7 +72,7 @@ export default function Home() {
     const formattedDay = formatDay(selectedDay);
     const msg =
       selectedTimeRange &&
-      `🍣Gostaria%20de%20agendar%20uma%20encomenda%20para%20${formattedDay}%20${deliveryData[selectedDay].deliveryDay}%20|%20${selectedTimeRange}`;
+      `Olá!%20Gostaria%20de%20agendar%20uma%20encomenda%20para%20*${formattedDay}*%20*${deliveryData[selectedDay].deliveryDay}*%20|%20*${selectedTimeRange}*`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
@@ -119,7 +119,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    !isLocalPickup && setSelectedTimeRange(deliveryData["friday"].timeRange[0]);
+    if (!isLocalPickup) {
+      setSelectedTimeRange(deliveryData["friday"].timeRange[0]);
+    } else {
+      setSelectedTimeRange("");
+    }
   }, [isLocalPickup]);
 
   return (
