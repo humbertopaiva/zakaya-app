@@ -200,7 +200,7 @@ export default function Home() {
             fontSize={"lg"}
             color={"red.500"}
           >
-            Pedidos até às 16h
+            Pedidos até as 18h
           </Text>
 
           <VStack w="100%">
