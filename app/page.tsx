@@ -72,7 +72,7 @@ export default function Home() {
     const formattedDay = formatDay(selectedDay);
     const msg =
       selectedTimeRange &&
-      `Olá!%20Gostaria%20de%20agendar%20uma%20encomenda%20para%20*${formattedDay}*%20*${deliveryData[selectedDay].deliveryDay}*%20|%20*${selectedTimeRange}*`;
+      `%20Gostaria%20de%20agendar%20uma%20encomenda%20para%20*${formattedDay}*%20*${deliveryData[selectedDay].deliveryDay}*%20|%20*${selectedTimeRange}*`;
 
     const whatsappLink = `https://wa.me/5532999208896?text=${msg}`;
 
