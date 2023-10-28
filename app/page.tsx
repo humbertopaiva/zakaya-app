@@ -194,14 +194,14 @@ export default function Home() {
             <Image src="./logo.png" alt="Logo" />
           </Box>
 
-          <Text
+{/*           <Text
             as={"span"}
             fontWeight={"bold"}
             fontSize={"lg"}
             color={"red.500"}
           >
             Pedidos até as 18h
-          </Text>
+          </Text> */}
 
           <VStack w="100%">
             <Box w="100%">
